@@ -63,8 +63,7 @@ For example, the following directory structure would generate the output below.
 
 ```
 
-**Inputs**
-
+### Inputs ###
 MyS3Bucket.json
 ```
 {
@@ -101,7 +100,7 @@ MyR53Record.json
 }
 ```
 
-**Output**
+### Output ###
 ```
 {
 	"Resources": {
