@@ -1,16 +1,29 @@
 {
   "name": "upbeat-cloudformation-json-stitcher",
-  "author": "Chris Spence (https://teachupbeat.com)",
-  "description": "This utility combines JSON Cloudformation resource templates stored in individual files into a single template file",
+  "author": "",
+  "description": "This utility combines JSON Cloudformation resource templates stored in individual files into a single template file.",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
   "license": "ISC",
+  "scripts": {
+    "publish": "git add -A . && git commit -m 'prepublish npm package' && npm version patch && npm publish"
+  },
   "peerDependencies": {
     "minimist": "^1.2.8"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeachUpbeat/upbeat-cloudformation-json-stitcher.git"
+  },
+  "keywords": [
+    "upbeat",
+    "teach upbeat",
+    "cloud",
+    "cloudformation",
+    "formation",
+    "templates",
+    "utility",
+    "stitcher",
+    "aws"
+  ]
 }
