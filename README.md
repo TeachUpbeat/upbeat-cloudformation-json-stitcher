@@ -49,7 +49,7 @@ The following attributes are populated only if specified in the supplied argumen
 AWSTemplateFormatVersion
 Description
 ```
-See examples below for reference.
+See examples above for reference.
 
 ## Resource Mapping
 The filename (sans .json extension) is used as the resource name in the constructed template. (e.g., MyS3Bucket.json is mapped to Template.Resources.MyS3Bucket in the generated JSON template)
