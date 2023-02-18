@@ -56,10 +56,10 @@ The filename (sans .json extension) is used as the resource name in the construc
 For example, the following directory structure would generate the output below.
 ```
 - s3
-	-- MyS3Bucket.json
+  -- MyS3Bucket.json
 - r53
-	-- domains
-		--- MyR53Record.json
+  -- domains
+    --- MyR53Record.json
 
 ```
 
