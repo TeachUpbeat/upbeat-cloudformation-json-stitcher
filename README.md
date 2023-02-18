@@ -64,6 +64,7 @@ For example, the following directory structure would generate the output below.
 ```
 
 **Inputs**
+
 MyS3Bucket.json
 ```
 {
