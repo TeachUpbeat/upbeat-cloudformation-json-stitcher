@@ -53,4 +53,85 @@ See examples above for reference.
 
 ## Resource Mapping
 The filename (sans .json extension) is used as the resource name in the constructed template. (e.g., MyS3Bucket.json is mapped to Template.Resources.MyS3Bucket in the generated JSON template)
+For example, the following directory structure would generate the output below.
+```
+- s3
+	-- MyS3Bucket.json
+- r53
+	-- domains
+		--- MyR53Record.json
 
+```
+
+**Inputs**
+MyS3Bucket.json
+```
+{
+  "Type": "AWS::S3::Bucket",
+  "Properties": {
+    "AccessControl": "Private",
+    "BucketName": {
+      "Fn::Sub": "upbeat-elastic-beanstalk-${AWS::Region}-${Stage}"
+    },
+    "OwnershipControls": {
+      "Rules": [
+        {
+          "ObjectOwnership": "BucketOwnerEnforced"
+        }
+      ]
+    }
+  }
+}
+```
+
+MyR53Record.json
+```
+{
+  "Type": "AWS::Route53::RecordSet",
+  "Properties": {
+    "HostedZoneId": "some-zone-id",
+    "Name": "some-source-url.com",
+    "Type": "CNAME",
+    "TTL": "60",
+    "ResourceRecords": [
+      "some-destination-url.com"
+    ]
+  }
+}
+```
+
+**Output**
+```
+{
+	"Resources": {
+		MyS3Bucket: {
+		  "Type": "AWS::S3::Bucket",
+		  "Properties": {
+		    "AccessControl": "Private",
+		    "BucketName": {
+		      "Fn::Sub": "upbeat-elastic-beanstalk-${AWS::Region}-${Stage}"
+		    },
+		    "OwnershipControls": {
+		      "Rules": [
+		        {
+		          "ObjectOwnership": "BucketOwnerEnforced"
+		        }
+		      ]
+		    }
+		  }			
+		}
+		MyR53Record: {
+		  "Type": "AWS::Route53::RecordSet",
+		  "Properties": {
+		    "HostedZoneId": "some-zone-id",
+		    "Name": "some-source-url.com",
+		    "Type": "CNAME",
+		    "TTL": "60",
+		    "ResourceRecords": [
+		      "some-destination-url.com"
+		    ]
+		  }
+		}
+	}
+}
+```
