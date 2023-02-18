@@ -28,7 +28,7 @@ async function getFiles(dir) {
 function buildTemplate(files) {
 	console.log("Stitching...");
 	files.forEach(f => {
-		const excluded = extname(f) !== ".json" || exclusions.some((e) => f.match(new RegExp(e,"gim")));
+		const excluded = extname(f) !== ".json" || exclusions.some((e) => relative(source,f).match(new RegExp(e,"gim")));
 		const config = ["Metadata","Parameters","Rules","Mappings","Conditions","Transform","Outputs"];
 		const filename = basename(f).replace(/\.json$/i,"");
 		if(excluded) return;

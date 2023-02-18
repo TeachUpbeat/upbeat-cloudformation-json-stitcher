@@ -18,6 +18,16 @@ The following command will combine all files in the specified directory into an 
 node index.js --source "../some-other-location/cloud-formation/regional/templates" --output-path ".." --filename "my-template.json"
 ```
 
+The following command will combine files with paths that do not match the ":::" delimited regular expressions in the exclude list. This can be helpful if you want only test certain resources in your stack.
+```
+node index.js --exclude "elastic-beanstalk:::rds:::^\d{4}-some-path-starting-with-four-numbers"
+```
+
+The following command will incldude template version and description attributes on the generated template.
+```
+node index.js --format-version "2010-09-09" --description "my description here"
+```
+
 ## Configuration Mapping
 
 Filenames that are found in the following list extend the like-named top level attributes in the template: 
