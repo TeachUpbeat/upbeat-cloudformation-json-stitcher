@@ -32,9 +32,10 @@ function buildTemplate(files) {
 		const config = ["Metadata","Parameters","Rules","Mappings","Conditions","Transform","Outputs"];
 		const filename = basename(f).replace(/\.json$/i,"");
 		if(excluded) return;
+		let content
 		
 		try {
-			const content = JSON.parse(fs.readFileSync(f, "utf8"));
+			 content = JSON.parse(fs.readFileSync(f, "utf8"));
 		} catch (e) {
 			throw new Error(`JSON parsing error stitching: ${relative(source,f)}`);
 		}
