@@ -28,12 +28,17 @@ async function getFiles(dir) {
 function buildTemplate(files) {
 	console.log("Stitching...");
 	files.forEach(f => {
-		const excluded = extname(f) !== ".json" || exclusions.some((e) => relative(source,f).match(new RegExp(e,"gim")));
+		const excluded = extname(f) !== ".json" || exclusions.some((e) => relative(source,f).match(new RegExp(e,"gm")));
 		const config = ["Metadata","Parameters","Rules","Mappings","Conditions","Transform","Outputs"];
 		const filename = basename(f).replace(/\.json$/i,"");
 		if(excluded) return;
 		
-		const content = JSON.parse(fs.readFileSync(f, "utf8"));
+		try {
+			const content = JSON.parse(fs.readFileSync(f, "utf8"));
+		} catch (e) {
+			throw new Error(`JSON parsing error stitching: ${relative(source,f)}`);
+		}
+		
 
 		if(config.indexOf(filename) !== -1) {
 			output[filename] = output[filename] ?? {};
