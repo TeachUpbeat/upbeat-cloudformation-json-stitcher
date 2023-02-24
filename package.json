@@ -2,7 +2,7 @@
   "name": "upbeat-cloudformation-json-stitcher",
   "author": "",
   "description": "This utility combines JSON Cloudformation resource templates stored in individual files into a single template file.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "license": "ISC",
   "scripts": {
