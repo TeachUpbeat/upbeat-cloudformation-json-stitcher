@@ -9,7 +9,8 @@
     "publish": "git add -A . && git commit -m 'prepublish npm package' && npm version patch && npm publish"
   },
   "peerDependencies": {
-    "minimist": "^1.2.8"
+    "minimist": "^1.2.8",
+    "semver": "^7.3.8"
   },
   "repository": {
     "type": "git",

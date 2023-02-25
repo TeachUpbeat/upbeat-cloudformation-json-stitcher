@@ -1,6 +1,7 @@
 const { promisify } = require('util');
 const { resolve, basename, path, extname, relative } = require('path');
 const fs = require('fs');
+const semver = require('semver');
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 const output = { Resources: {}};
@@ -13,6 +14,7 @@ const exclusions = (argv["exclude"] ?? "").split(":::").filter(s => s.length);
 const transform = argv["transform"] ?? null;
 const format = argv["format-version"];
 const description = argv["description"];
+const semversion = argv["semver"];
 
 if(format) output["AWSTemplateFormatVersion"] = format;
 if(description) output.Description = description;
@@ -27,6 +29,8 @@ async function getFiles(dir) {
   return files.reduce((a, f) => a.concat(f), []);
 }
 
+
+
 function buildTemplate(files) {
 	console.log("Stitching...");
 	files.forEach(f => {
@@ -38,6 +42,7 @@ function buildTemplate(files) {
 		
 		try {
 			 content = JSON.parse(fs.readFileSync(f, "utf8"));
+			 content = applySemver(filename, content, f);
 		} catch (e) {
 			throw new Error(`JSON parsing error stitching: ${relative(source,f)}`);
 		}
@@ -55,6 +60,25 @@ function buildTemplate(files) {
 
 	fs.writeFileSync(`${destination}/${filename}`, JSON.stringify(output, null, 2),"utf8");
 	console.log(`Template complete: ${destination}/${filename}`);
+}
+
+function applySemver(filename, content, filepath) {
+	if(!semversion) return content;
+	const semfile = semversion.split(".")[0];
+	const path = semversion.split(".").slice(1);
+	if(filename !== semfile) return content;
+	const value = path.reduce((p,c)=>p&&p[c]||null, content);
+	const bumped = semver.inc(value, "patch");
+	const updated = setProperty(content,path.join("."),bumped);
+	fs.writeFileSync(filepath, JSON.stringify(updated, null, 2));
+	return updated;
+}
+
+function setProperty(obj,path,value) {
+	const [head, ...rest] = path.split('.')
+  return {
+      ...obj, [head]: rest.length ? setProperty(obj[head], rest.join('.'), value) : value
+  }
 }
 
 getFiles(source)
