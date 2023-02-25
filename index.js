@@ -10,11 +10,13 @@ const source = argv["source"] ?? "./";
 const destination = (argv["output-path"] ?? ".").replace(/\/$/g,"");
 const filename = argv["filename"] ?? "template.json";
 const exclusions = (argv["exclude"] ?? "").split(":::").filter(s => s.length);
+const transform = argv["transform"] ?? null;
 const format = argv["format-version"];
 const description = argv["description"];
 
 if(format) output["AWSTemplateFormatVersion"] = format;
 if(description) output.Description = description;
+if(transform) output.Transform = transform;
 
 async function getFiles(dir) {
   const subdirs = await readdir(dir);
