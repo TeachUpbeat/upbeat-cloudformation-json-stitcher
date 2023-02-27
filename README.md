@@ -18,12 +18,12 @@ The following command will combine all files in the specified directory into an 
 node index.js --source "../some-other-location/cloud-formation/regional/templates" --output-path ".." --filename "my-template.json"
 ```
 
-The following command will combine files with paths that do not match the ":::" delimited regular expressions in the exclude list. This can be helpful if you want only test certain resources in your stack.
+The following command will combine files with paths that do not match the ":::" delimited regular expressions in the exclude list. This can be helpful if you only want to test certain resources in your stack.
 ```
 node index.js --exclude "elastic-beanstalk:::rds:::Portal\\(?!Develop\\)" //this skips any files with elastic-beanstalk, rds, or Portal in their paths, with the exception of PortalDevelop, which would be included via the negative lookahead in the regex
 ```
 
-The following command will includetemplate version and description attributes on the generated template.
+The following command will include template version and description attributes on the generated template.
 ```
 node index.js --format-version "2010-09-09" --description "my description here"
 ```
