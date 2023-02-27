@@ -20,7 +20,7 @@ node index.js --source "../some-other-location/cloud-formation/regional/template
 
 The following command will combine files with paths that do not match the ":::" delimited regular expressions in the exclude list. This can be helpful if you want only test certain resources in your stack.
 ```
-node index.js --exclude "elastic-beanstalk:::rds:::^\d{4}-some-path-starting-with-four-numbers"
+node index.js --exclude "elastic-beanstalk:::rds:::Portal\\(?!Develop\\)" //this skips any files with elastic-beanstalk, rds, or Portal in their paths, with the exception of PortalDevelop, which would be included via the negative lookahead in the regex
 ```
 
 The following command will includetemplate version and description attributes on the generated template.
