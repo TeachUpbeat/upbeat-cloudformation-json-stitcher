@@ -23,11 +23,25 @@ The following command will combine files with paths that do not match the ":::" 
 node index.js --exclude "elastic-beanstalk:::rds:::^\d{4}-some-path-starting-with-four-numbers"
 ```
 
-The following command will incldude template version and description attributes on the generated template.
+The following command will includetemplate version and description attributes on the generated template.
 ```
 node index.js --format-version "2010-09-09" --description "my description here"
 ```
 
+The following command will automatically bump a semver version at the specified JSON path with each stitch (we use this in concert with a "donothing" custom lambda resource to trigger builds in parent and all nested stacks when there's an update".
+```
+node index.js --semver "MyCustomResource.Properties.Version"
+```
+Note that the above mutates the source file before copying the template fragment to the output file.
+
+
+For usage in a parent package, we'll typically add a script like that below to the package.json.
+```
+"scripts": {
+    "stitch-regional-infrastructure": "node node_modules/upbeat-cloudformation-json-stitcher/index.js --description "Our Regional Infrastructure" --semver "Semver.Properties.Version" --source regional/templates --output-path regional/build --filename lower.template.json --exclude Portal\\(?!Develop\\):::SomeOtherFragmentToExclude.json"
+    ...
+}
+```
 ## Configuration Mapping
 
 Filenames that are found in the following list extend the like-named top level attributes in the template: 
