@@ -1,6 +1,6 @@
 # Upbeat CloudFormation JSON Stitcher
 
-This utility scans the supplied directory for JSON files and builds a CloudFormation template with the following logic described below.
+This utility scans the supplied directory for JSON files and builds a CloudFormation template with the logic described below.
 
 ## Usage
 The following command will combine all files in the current directory into a template.json file also included in the current directory (not recommended).
