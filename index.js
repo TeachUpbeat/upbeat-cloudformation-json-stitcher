@@ -15,6 +15,9 @@ const transform = argv["transform"] ?? null;
 const format = argv["format-version"];
 const description = argv["description"];
 const semversion = argv["semver"];
+const randstring = !!argv["rand"];
+
+
 
 if(format) output["AWSTemplateFormatVersion"] = format;
 if(description) output.Description = description;
@@ -68,7 +71,7 @@ function applySemver(filename, content, filepath) {
 	const path = semversion.split(".").slice(1);
 	if(filename !== semfile) return content;
 	const value = path.reduce((p,c)=>p&&p[c]||null, content);
-	const bumped = semver.inc(value, "patch");
+	const bumped = randstring ? rand(32) : semver.inc(value, "patch");
 	const updated = setProperty(content,path.join("."),bumped);
 	fs.writeFileSync(filepath, JSON.stringify(updated, null, 2));
 	return updated;
@@ -79,6 +82,18 @@ function setProperty(obj,path,value) {
   return {
       ...obj, [head]: rest.length ? setProperty(obj[head], rest.join('.'), value) : value
   }
+}
+
+function rand(length) {
+    let result = '';
+    const characters = '@#$%^&*()-_+=/?;:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
 }
 
 getFiles(source)
